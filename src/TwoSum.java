@@ -1,97 +1,68 @@
 import java.util.Arrays;
-//unfinished
+
+// run time should be theta n ln n
 public class TwoSum {
 	public static int[] twoSum(int[] nums, int target) {
 
+		// the place to store the actual numbers (not the indexes of the numbers)
+		int answer1 = 0;
+		int answer2 = 0;
+
+		// gets copy of nums
+		int[] newNums = nums.clone();
+
+		// sorts newNums
+		Arrays.sort(newNums);
+
+		int index = 0;
+		boolean solved = false;
+		while (!solved && index < nums.length) {
+			int possibleSolution = Arrays.binarySearch(newNums, target - newNums[index]);
+			if(possibleSolution >= 0 && possibleSolution < newNums.length) {
+				answer1 = newNums[possibleSolution];
+				answer2 = newNums[index];
+			}
+			
+			if (answer1 + answer2 == target && index != possibleSolution) {
+				solved = true;
+
+			} else {
+				index++;
+			}
+		}
+		
+		System.out.println(answer1);
+		System.out.println(answer2);
+		
+
 		// array to store solution
 		int[] solution = new int[2];
-
-		// original nums
-		int[] originalNums = nums.clone();
-
-		// sorts the array
-		Arrays.sort(nums);
-
-		// changed to true when the solution is found
-		boolean solved = false;
-		// the lower index starting point
-		int currentIndexLower = 0;
-
-		/*
-		 * outside loop for going through all iterations of each lower index until
-		 * establishing not ok or there is a solution
-		 */
-		while (!solved) {
-
-			/*
-			 * index of limits for the currentIndexUpper given the currentIndexLower. The
-			 * limits are non-inclusive (if the limit is 0, then it is possible that 0 is
-			 * part of the solution)
-			 */
-			int upperLimitIndex = nums.length - 1;
-			int lowerLimitIndex = currentIndexLower + 1;
-
-			// current index of the upper number (should be in the middle of the upper and
-			// lower limits)
-			int currentIndexUpper = (upperLimitIndex - lowerLimitIndex) / 2 + lowerLimitIndex;
-
-			// inside loop for going through every upper index
-			while (!solved && currentIndexUpper < nums.length && currentIndexUpper > currentIndexLower) {
-				// current sum
-				int currentSum = nums[currentIndexLower] + nums[currentIndexUpper];
-
-				// sum is too low
-				if (currentSum < target) {
-					lowerLimitIndex = currentIndexUpper + 1;
-					currentIndexUpper = (((upperLimitIndex - lowerLimitIndex) / 2) + lowerLimitIndex);
-				}
-				// sum is too high
-				else if (currentSum > target) {
-					upperLimitIndex = currentIndexUpper - 1;
-					currentIndexUpper = (((upperLimitIndex - lowerLimitIndex) / 2) + lowerLimitIndex);
-				}
-				// solution found
-				else {
-					solution[0] = currentIndexLower;
-					solution[1] = currentIndexUpper;
-					solved = true;
-				}
-
+		boolean a1found = false;
+		boolean a2found = false;
+		int index1 = 0;
+		while(!a1found) {
+			if(answer1 == nums[index1]) {
+				solution[0] = index1;
+				a1found = true;
 			}
-			currentIndexLower++;
-
+			index1 ++;
+		}
+		index1 = 0;
+		while(!a2found) {
+			if(answer2 == nums[index1]  && index1 != solution[0]) {
+				solution[1] = index1;
+				a2found = true;
+			}
+			index1 ++;
 		}
 
-		solution = getOriginalIndex(solution, originalNums, nums);
+
+		if (solution[0] > solution[1]) {
+			int temp = solution[1];
+			solution[1] = solution[0];
+			solution[0] = temp;
+		}
 
 		return solution;
-
-	}
-
-	private static int[] getOriginalIndex(int[] solution, int[] originalNums, int[] nums) {
-		int[] realSolution = new int[2];
-		int actualNumber1 = nums[solution[0]];
-		int actualNumber2 = nums[solution[1]];
-		boolean solved1 = false;
-		boolean solved2 = false;
-		int index1 = 0;
-		int index2 = 0;
-
-		while (!solved1) {
-			if (actualNumber1 == originalNums[index1]) {
-				realSolution[0] = index1;
-				solved1 = true;
-			}
-			index1++;
-		}
-		while (!solved2) {
-			if (actualNumber2 == originalNums[index2] && index2 != solution[0]) {
-				realSolution[1] = index2;
-				solved2 = true;
-			}
-			index2++;
-		}
-
-		return realSolution;
 	}
 }

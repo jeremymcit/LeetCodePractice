@@ -52,12 +52,17 @@ class TwoSumTest {
 		int targetTest6 = 6;
 		int[] actual6 = TwoSum.twoSum(testNums6, targetTest6);
 		int[] expected6 = {0, 1};
+		for(int i : actual6) {
+			System.out.println(i);
+		}
 		assertTrue(Arrays.equals(expected6, actual6));
+		
 		
 		int [] testNums7 = {3,2, 3};
 		int targetTest7 = 6;
 		int[] actual7 = TwoSum.twoSum(testNums7, targetTest7);
 		int[] expected7 = {0, 2};
+
 		assertTrue(Arrays.equals(expected7, actual7));
 		
 	}
