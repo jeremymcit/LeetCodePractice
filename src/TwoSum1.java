@@ -15,7 +15,7 @@ public class TwoSum1 {
 
 		while (!solved) {
 			//inner loop index
-			int iINdex = 0;
+			int iINdex = oIndex + 1;
 			while(iINdex < nums.length && !solved) {
 				int currentSum = nums[oIndex] + nums[iINdex];
 				if(currentSum == target && oIndex != iINdex) {
@@ -29,11 +29,6 @@ public class TwoSum1 {
 			
 		}
 
-		if (solution[0] > solution[1]) {
-			int p = solution[0];
-			solution[0] = solution[1];
-			solution[1] = p;
-		}
 
 		return solution;
 
