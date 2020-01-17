@@ -8,7 +8,7 @@ import java.util.ArrayList;
 public class MyMath {
 
 	public static void main(String[] args) {
-		System.out.println(getFactors(36));
+		System.out.println(isPrime(91));
 	}
 	
 	/**
@@ -26,6 +26,21 @@ public class MyMath {
 		}
 		
 	return factors;
+	}
+	
+	/**
+	 * Returns true if x is prime or false otherwise. Assumes x is a positive integer.
+	 * @param x
+	 * @return
+	 */
+	public static boolean isPrime(int x) {
+		boolean isPrime = true;
+		for(int i = 2; i < x; i++) {
+			if(x % i == 0) {
+				isPrime = false;
+			}
+		}
+		return isPrime;
 	}
 	
 }
